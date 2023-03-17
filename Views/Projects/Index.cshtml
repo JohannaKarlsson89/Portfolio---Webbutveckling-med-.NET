@@ -1,0 +1,66 @@
+@model IEnumerable<Portfolio.Models.Projects>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Projects</h1>
+
+
+<form asp-action="Index" method="get">
+    <!-- Search bar -->
+    <div class="form-actions no-color">
+        <p>
+            Find by project name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to Full List</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+              <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.ProjectsName)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectDescription)
+            </th>
+           <th >
+                @Html.DisplayNameFor(model => model.ProjectUrl )
+            </th>
+     <th></th>
+             
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectsName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectDescription)
+            </td>
+        
+            <td>
+                 <a href="@Html.DisplayFor(modelItem => item.ProjectUrl)" target="_blank" class="btn btn-light"><i class="i fi-brands-github"></i> GitHub</a>
+            </td>
+           
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProjectsId" class="btn btn-warning">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.ProjectsId" class="btn btn-info">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.ProjectsId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add new project</a>
+</p>
